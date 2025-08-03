@@ -6,7 +6,7 @@ if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
 
-let cached = (global as any).mongoose || { conn: null, promise: null };
+const cached = (global as unknown as { mongoose?: { conn: null | typeof mongoose; promise: null | Promise<typeof mongoose> } }).mongoose || { conn: null, promise: null };
 
 export async function connectToDatabase() {
   if (cached.conn) return cached.conn;
@@ -16,6 +16,6 @@ export async function connectToDatabase() {
     }).then((mongoose) => mongoose);
   }
   cached.conn = await cached.promise;
-  (global as any).mongoose = cached;
+  (global as unknown as { mongoose?: typeof cached }).mongoose = cached;
   return cached.conn;
 } 

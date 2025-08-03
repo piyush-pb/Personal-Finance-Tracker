@@ -16,7 +16,7 @@ interface MonthlyData {
 }
 
 interface ExpensesBarChartProps {
-  refreshTrigger?: any;
+  refreshTrigger?: number;
 }
 
 export default function ExpensesBarChart({ refreshTrigger }: ExpensesBarChartProps) {
@@ -43,7 +43,7 @@ export default function ExpensesBarChart({ refreshTrigger }: ExpensesBarChartPro
           .map(([month, total]) => ({ month, total }))
           .sort((a, b) => a.month.localeCompare(b.month));
         setData(chartData);
-      } catch (err) {
+      } catch {
         setError("Could not load chart data");
       }
       setLoading(false);

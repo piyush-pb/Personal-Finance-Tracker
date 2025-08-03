@@ -23,7 +23,7 @@ interface Transaction {
 }
 
 interface CategoryPieChartProps {
-  refreshTrigger?: any;
+  refreshTrigger?: number;
 }
 
 export default function CategoryPieChart({ refreshTrigger }: CategoryPieChartProps) {
@@ -46,7 +46,7 @@ export default function CategoryPieChart({ refreshTrigger }: CategoryPieChartPro
         });
         const chartData = CATEGORIES.map((cat) => ({ name: cat, value: byCategory[cat] || 0 }));
         setData(chartData.filter((d) => d.value > 0));
-      } catch (err) {
+      } catch {
         setError("Could not load chart data");
       }
       setLoading(false);

@@ -15,7 +15,7 @@ interface Transaction {
 }
 
 interface TransactionListProps {
-  refreshTrigger?: any;
+  refreshTrigger?: number;
 }
 
 export default function TransactionList({ refreshTrigger }: TransactionListProps) {
@@ -39,15 +39,14 @@ export default function TransactionList({ refreshTrigger }: TransactionListProps
       if (!res.ok) throw new Error("Failed to fetch transactions");
       const data = await res.json();
       setTransactions(data);
-    } catch (err) {
-      setError("Could not load transactions");
-    }
+          } catch {
+        setError("Could not load transactions");
+      }
     setLoading(false);
   };
 
   useEffect(() => {
     fetchTransactions();
-    // eslint-disable-next-line
   }, [refreshTrigger, refresh]);
 
   // Edit logic
@@ -111,7 +110,7 @@ export default function TransactionList({ refreshTrigger }: TransactionListProps
         closeEdit();
         setRefresh((r) => r + 1);
       }
-    } catch (err) {
+    } catch {
       setEditApiError("Network error");
     }
     setEditLoading(false);
@@ -128,7 +127,7 @@ export default function TransactionList({ refreshTrigger }: TransactionListProps
       }
       setDeleteId(null);
       setRefresh((r) => r + 1);
-    } catch (err) {
+    } catch {
       // Optionally handle error
     }
     setDeleteLoading(false);

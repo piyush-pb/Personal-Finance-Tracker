@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     const filter = month ? { month } : {};
     const budgets = await Budget.find(filter);
     return NextResponse.json(budgets, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch budgets' }, { status: 500 });
   }
 }
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     await connectToDatabase();
     const budget = await Budget.create(parsed.data);
     return NextResponse.json(budget, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to add budget' }, { status: 500 });
   }
 }
@@ -51,7 +51,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: 'Budget not found' }, { status: 404 });
     }
     return NextResponse.json(updated, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update budget' }, { status: 500 });
   }
 }
@@ -69,7 +69,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Budget not found' }, { status: 404 });
     }
     return NextResponse.json({ success: true }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to delete budget' }, { status: 500 });
   }
 } 

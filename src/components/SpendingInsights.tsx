@@ -51,7 +51,7 @@ export default function SpendingInsights() {
         const txData: Transaction[] = await txRes.json();
         setBudgets(budgetsData);
         setTransactions(txData);
-      } catch (err) {
+      } catch {
         setError("Could not load insights");
       }
       setLoading(false);

@@ -45,7 +45,7 @@ export default function BudgetVsActualChart() {
         const txData: Transaction[] = await txRes.json();
         setBudgets(budgetsData);
         setTransactions(txData);
-      } catch (err) {
+      } catch {
         setError("Could not load chart data");
       }
       setLoading(false);

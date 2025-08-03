@@ -3,12 +3,12 @@ import { connectToDatabase } from '@/lib/db';
 import { Transaction } from '@/lib/models/Transaction';
 import { transactionSchema } from '@/utils/validation';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     await connectToDatabase();
     const transactions = await Transaction.find().sort({ date: -1 });
     return NextResponse.json(transactions, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch transactions' }, { status: 500 });
   }
 }
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       description: parsed.data.description,
     });
     return NextResponse.json(transaction, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to add transaction' }, { status: 500 });
   }
 }
@@ -56,7 +56,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: 'Transaction not found' }, { status: 404 });
     }
     return NextResponse.json(updated, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update transaction' }, { status: 500 });
   }
 }
@@ -74,7 +74,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: 'Transaction not found' }, { status: 404 });
     }
     return NextResponse.json({ success: true }, { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to delete transaction' }, { status: 500 });
   }
 } 

@@ -16,7 +16,11 @@ function getCurrentMonth() {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 }
 
-export default function BudgetManager() {
+interface BudgetManagerProps {
+  onUpdate?: () => void;
+}
+
+export default function BudgetManager({ onUpdate }: BudgetManagerProps) {
   const [month, setMonth] = useState(getCurrentMonth());
   const [budgets, setBudgets] = useState<Record<string, Budget>>({});
   const [inputs, setInputs] = useState<Record<string, string>>({});
@@ -40,7 +44,7 @@ export default function BudgetManager() {
       });
       setBudgets(byCat);
       setInputs(inputVals);
-    } catch (err) {
+    } catch {
       setError("Could not load budgets");
     }
     setLoading(false);
@@ -82,8 +86,9 @@ export default function BudgetManager() {
         setError(data.error ? JSON.stringify(data.error) : "Failed to save budget");
       } else {
         fetchBudgets();
+        onUpdate?.(); // Call the onUpdate callback when budget is saved
       }
-    } catch (err) {
+    } catch {
       setError("Network error");
     }
     setSaving((prev) => ({ ...prev, [cat]: false }));
@@ -100,7 +105,7 @@ export default function BudgetManager() {
       } else {
         fetchBudgets();
       }
-    } catch (err) {
+    } catch {
       setError("Network error");
     }
     setDeleting((prev) => ({ ...prev, [cat]: false }));

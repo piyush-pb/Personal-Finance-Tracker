@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { z } from "zod";
+
 import { transactionSchema, CATEGORIES } from "@/utils/validation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,7 +62,7 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
         setErrors({});
         if (onSuccess) onSuccess();
       }
-    } catch (err) {
+    } catch {
       setApiError("Network error");
     }
     setLoading(false);

@@ -11,7 +11,7 @@ interface Transaction {
 }
 
 interface DashboardSummaryProps {
-  refreshTrigger?: any;
+  refreshTrigger?: number;
 }
 
 export default function DashboardSummary({ refreshTrigger }: DashboardSummaryProps) {
@@ -28,7 +28,7 @@ export default function DashboardSummary({ refreshTrigger }: DashboardSummaryPro
         if (!res.ok) throw new Error("Failed to fetch transactions");
         const data: Transaction[] = await res.json();
         setTransactions(data);
-      } catch (err) {
+      } catch {
         setError("Could not load dashboard data");
       }
       setLoading(false);
